@@ -4,31 +4,11 @@
 //
 // TASK: Array Statistics Calculator
 //
-// Write a JavaScript program that reads a collection of numbers from the user
-// and computes key statistical values using separate functions.
-//
 // -----------------------------------------------------------------------------
 // HOW TO RUN THIS PROGRAM
 // -----------------------------------------------------------------------------
 // 1. Install the input library (only once):  npm install readline-sync
 // 2. Run the program:                        node assignment_03_array_statistics.js
-//
-// -----------------------------------------------------------------------------
-// EXPECTED INPUT / OUTPUT EXAMPLE
-// -----------------------------------------------------------------------------
-//
-//   How many numbers? 5
-//   Enter number 1: 4
-//   Enter number 2: 7
-//   Enter number 3: 2
-//   Enter number 4: 9
-//   Enter number 5: 1
-//
-//   Results:
-//   Sum:     23
-//   Average: 4.6
-//   Maximum: 9
-//   Minimum: 1
 //
 // -----------------------------------------------------------------------------
 // REQUIREMENTS
@@ -40,7 +20,61 @@
 //   print an error message and stop.
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
-// =============================================================================
 
+const readlineSync = require("readline-sync");
 
+function computeSum(arr) {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+function computeAverage(arr) {
+    return computeSum(arr) / arr.length;
+}
+
+function computeMax(arr) {
+    let maxVal = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > maxVal) {
+            maxVal = arr[i];
+        }
+    }
+    return maxVal;
+}
+
+function computeMin(arr) {
+    let minVal = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] < minVal) {
+            minVal = arr[i];
+        }
+    }
+    return minVal;
+}
+
+function main() {
+    const n = readlineSync.questionInt("How many numbers? ");
+
+    if (n <= 0) {
+        console.log("Error: The number of values must be positive.");
+        return;
+    }
+
+    const numbers = [];
+    for (let i = 0; i < n; i++) {
+        const value = readlineSync.questionInt(`Enter number ${i + 1}: `);
+        numbers.push(value);
+    }
+
+    console.log();
+    console.log("Results:");
+    console.log("Sum:    ", computeSum(numbers));
+    console.log("Average:", computeAverage(numbers));
+    console.log("Maximum:", computeMax(numbers));
+    console.log("Minimum:", computeMin(numbers));
+}
+
+main();
