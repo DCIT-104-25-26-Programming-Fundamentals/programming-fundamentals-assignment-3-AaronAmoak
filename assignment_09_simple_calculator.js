@@ -4,9 +4,6 @@
 //
 // TASK: Console-Based Simple Calculator
 //
-// Build a calculator program that runs in the console and performs basic
-// arithmetic operations based on the user's input.
-//
 // -----------------------------------------------------------------------------
 // HOW TO RUN THIS PROGRAM
 // -----------------------------------------------------------------------------
@@ -17,46 +14,13 @@
 // OPERATIONS YOUR CALCULATOR MUST SUPPORT
 // -----------------------------------------------------------------------------
 //
-//   1. Addition          ( + )    e.g.  10 + 3  =  13
-//   2. Subtraction       ( - )    e.g.  10 - 3  =  7
-//   3. Multiplication    ( * )    e.g.  10 * 3  =  30
-//   4. Division          ( / )    e.g.  10 / 3  =  3.33
-//   5. Modulus           ( % )    e.g.  10 % 3  =  1  (remainder)
-//   6. Exponentiation    ( ** )   e.g.  2 ** 8  =  256
+//   1. Addition          ( + )
+//   2. Subtraction       ( - )
+//   3. Multiplication    ( * )
+//   4. Division          ( / )
+//   5. Modulus           ( % )
+//   6. Exponentiation    ( ** )
 //   7. Quit
-//
-// -----------------------------------------------------------------------------
-// HOW THE MENU SHOULD LOOK
-// -----------------------------------------------------------------------------
-//
-//   ============================
-//        SIMPLE CALCULATOR
-//   ============================
-//   1. Addition
-//   2. Subtraction
-//   3. Multiplication
-//   4. Division
-//   5. Modulus
-//   6. Exponentiation
-//   7. Quit
-//   Select an operation (1-7):
-//
-// -----------------------------------------------------------------------------
-// EXPECTED INTERACTION EXAMPLE
-// -----------------------------------------------------------------------------
-//
-//   Select an operation (1-7): 4
-//   Enter first number : 10
-//   Enter second number: 3
-//   Result: 10 / 3 = 3.33
-//
-//   Select an operation (1-7): 4
-//   Enter first number : 5
-//   Enter second number: 0
-//   Error: Cannot divide by zero.
-//
-//   Select an operation (1-7): 7
-//   Goodbye!
 //
 // -----------------------------------------------------------------------------
 // REQUIREMENTS
@@ -68,10 +32,104 @@
 // - Display results to 2 decimal places using .toFixed(2).
 // - Handle invalid menu choices gracefully.
 //
-
-//
-// =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readlineSync = require('readline-sync');
 
+function addNumbers(a, b) {
+    return a + b;
+}
+
+function subtractNumbers(a, b) {
+    return a - b;
+}
+
+function multiplyNumbers(a, b) {
+    return a * b;
+}
+
+function divideNumbers(a, b) {
+    return a / b;
+}
+
+function modulusNumbers(a, b) {
+    return a % b;
+}
+
+function powerNumbers(base, exponent) {
+    return base ** exponent;
+}
+
+function printMenu() {
+    console.log("\n============================");
+    console.log("     SIMPLE CALCULATOR");
+    console.log("============================");
+    console.log("1. Addition");
+    console.log("2. Subtraction");
+    console.log("3. Multiplication");
+    console.log("4. Division");
+    console.log("5. Modulus");
+    console.log("6. Exponentiation");
+    console.log("7. Quit");
+}
+
+function main() {
+    let running = true;
+
+    while (running) {
+        printMenu();
+        const choice = readlineSync.question("Select an operation (1-7): ");
+
+        if (choice === "7") {
+            console.log("Goodbye!");
+            running = false;
+            continue;
+        }
+
+        if (!["1", "2", "3", "4", "5", "6"].includes(choice)) {
+            console.log("Error: Invalid choice. Please select 1-7.");
+            continue;
+        }
+
+        const a = readlineSync.questionFloat("Enter first number : ");
+        const b = readlineSync.questionFloat("Enter second number: ");
+        let result;
+
+        switch (choice) {
+            case "1":
+                result = addNumbers(a, b);
+                console.log(`Result: ${a} + ${b} = ${result.toFixed(2)}`);
+                break;
+            case "2":
+                result = subtractNumbers(a, b);
+                console.log(`Result: ${a} - ${b} = ${result.toFixed(2)}`);
+                break;
+            case "3":
+                result = multiplyNumbers(a, b);
+                console.log(`Result: ${a} * ${b} = ${result.toFixed(2)}`);
+                break;
+            case "4":
+                if (b === 0) {
+                    console.log("Error: Cannot divide by zero.");
+                } else {
+                    result = divideNumbers(a, b);
+                    console.log(`Result: ${a} / ${b} = ${result.toFixed(2)}`);
+                }
+                break;
+            case "5":
+                if (b === 0) {
+                    console.log("Error: Cannot divide by zero.");
+                } else {
+                    result = modulusNumbers(a, b);
+                    console.log(`Result: ${a} % ${b} = ${result.toFixed(2)}`);
+                }
+                break;
+            case "6":
+                result = powerNumbers(a, b);
+                console.log(`Result: ${a} ** ${b} = ${result.toFixed(2)}`);
+                break;
+        }
+    }
+}
+
+main();
